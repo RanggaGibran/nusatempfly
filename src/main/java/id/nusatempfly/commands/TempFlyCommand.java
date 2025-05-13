@@ -327,14 +327,27 @@ public class TempFlyCommand implements CommandExecutor, TabCompleter {
         boolean isCurrentlyEnabled = plugin.getPlayerDataManager().isFlightEnabled(player.getUniqueId());
         
         if (isCurrentlyEnabled) {
-            // Flight is already on - disable it
-            plugin.getFlightManager().disableFlight(player);
+            // Flight is already on - provide status info before disabling
+            String prefix = ChatColor.translateAlternateColorCodes('&', 
+                    plugin.getConfig().getString("messages.prefix"));
             
-            // Send toggle off message
-            String message = ChatColor.translateAlternateColorCodes('&', 
-                    plugin.getConfig().getString("messages.prefix") + 
-                    plugin.getConfig().getString("messages.flight-toggle-off"));
-            player.sendMessage(message);
+            // Show status message that flight is already active
+            player.sendMessage(prefix + ChatColor.GOLD + "TempFly is already enabled!");
+            
+            // Show remaining flight time
+            long remainingTime = plugin.getPlayerDataManager().getRemainingFlightTime(player.getUniqueId());
+            if (!player.hasPermission("nusatempfly.bypass.timelimit")) {
+                String timeStr = timeFormatter.format(remainingTime);
+                player.sendMessage(prefix + ChatColor.YELLOW + "Remaining time: " + 
+                        ChatColor.GREEN + timeStr);
+            } else {
+                player.sendMessage(prefix + ChatColor.YELLOW + "You have " + 
+                        ChatColor.GOLD + "unlimited" + ChatColor.YELLOW + " flight time.");
+            }
+            
+            // Ask if they want to disable it
+            player.sendMessage(prefix + ChatColor.YELLOW + "Use " + 
+                    ChatColor.GOLD + "/tempfly toggle" + ChatColor.YELLOW + " again to disable flight.");
         } else {
             // Flight is off - enable it
             boolean success = plugin.getFlightManager().enableFlight(player);

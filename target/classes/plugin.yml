@@ -7,10 +7,10 @@ softdepend: [PlaceholderAPI, WorldGuard]
 author: NusaDev
 
 commands:
-  tempfly:
+  fly:
     description: Main command for NusaTempFly plugin
     usage: /<command> [subcommand] [args]
-    aliases: [tf]
+    aliases: [tempfly, tf, tfly]
   
 permissions:
   nusatempfly.admin:
