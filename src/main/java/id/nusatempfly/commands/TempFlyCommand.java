@@ -323,8 +323,40 @@ public class TempFlyCommand implements CommandExecutor, TabCompleter {
             return;
         }
         
-        // Toggle flight
-        plugin.getFlightManager().toggleFlight(player);
+        // Check if flight is already enabled before toggling
+        boolean isCurrentlyEnabled = plugin.getPlayerDataManager().isFlightEnabled(player.getUniqueId());
+        
+        if (isCurrentlyEnabled) {
+            // Flight is already on - disable it
+            plugin.getFlightManager().disableFlight(player);
+            
+            // Send toggle off message
+            String message = ChatColor.translateAlternateColorCodes('&', 
+                    plugin.getConfig().getString("messages.prefix") + 
+                    plugin.getConfig().getString("messages.flight-toggle-off"));
+            player.sendMessage(message);
+        } else {
+            // Flight is off - enable it
+            boolean success = plugin.getFlightManager().enableFlight(player);
+            
+            if (success) {
+                // Send toggle on message
+                String message = ChatColor.translateAlternateColorCodes('&', 
+                        plugin.getConfig().getString("messages.prefix") + 
+                        plugin.getConfig().getString("messages.flight-toggle-on"));
+                player.sendMessage(message);
+                
+                // Also show remaining time
+                long remainingTime = plugin.getPlayerDataManager().getRemainingFlightTime(player.getUniqueId());
+                if (!player.hasPermission("nusatempfly.bypass.timelimit")) {
+                    String timeStr = timeFormatter.format(remainingTime);
+                    String timeMessage = ChatColor.translateAlternateColorCodes('&', 
+                            plugin.getConfig().getString("messages.prefix") + 
+                            plugin.getConfig().getString("messages.time-check").replace("%time%", timeStr));
+                    player.sendMessage(timeMessage);
+                }
+            }
+        }
     }
     
     // Handle check command: /tempfly check [player]
