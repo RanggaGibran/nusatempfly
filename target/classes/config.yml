@@ -1,0 +1,70 @@
+# NusaTempFly Configuration
+
+# Storage settings
+storage:
+  type: yaml  # Currently only yaml is supported
+
+# Flight settings
+flight:
+  # Default time to give when using /tempfly give without specifying time (in seconds)
+  default-time: 300
+  # Booster multiplier for players with nusatempfly.booster permission (1.5 = +50%)
+  booster-multiplier: 1.5
+  # Whether to disable flight when time runs out
+  disable-on-expiry: true
+  # Whether flight should be disabled when player takes damage
+  disable-on-damage: false
+  # Whether to save flight time when player disconnects
+  save-on-disconnect: true
+
+# WorldGuard integration settings
+worldguard:
+  # Whether WorldGuard integration is enabled
+  enabled: true
+  # Whether to pause flight time consumption in no-fly regions
+  pause-time-in-no-fly-regions: true
+  # Whether to notify players when entering/exiting no-fly regions
+  notify-region-change: true
+  # Message shown when entering a no-fly region
+  no-fly-region-enter-message: "&c⚠ Kamu memasuki zona larangan terbang"
+  # Message shown when exiting a no-fly region
+  no-fly-region-exit-message: "&a✓ Kamu bisa terbang lagi sekarang"
+
+# Messages settings
+messages:
+  # Prefix plugin
+  prefix: "&8[&bNusa&9Fly&8] &r"
+  
+  # Pesan izin dan error
+  no-permission: "&c⚠ Kamu tidak memiliki izin!"
+  player-not-found: "&c⚠ Pemain tidak ditemukan"
+  invalid-time-format: "&c⚠ Format waktu salah! Gunakan format 1d2h3m4s"
+  
+  # Pesan status penerbangan
+  flight-enabled: "&a✈ Mode terbang aktif"
+  flight-disabled: "&c✈ Mode terbang nonaktif"
+  flight-expired: "&c⌛ Waktu terbangmu sudah habis!"
+  
+  # Pesan waktu terbang
+  time-added: "&a⌛ Mendapat &f%time% &awaktu terbang!"
+  time-added-booster: "&a⌛ Mendapat &f%original_time% &a(+&f%booster_time% &aboost)"
+  time-removed: "&c⌛ Kehilangan &f%time% &cwaktu terbang"
+  time-set: "&a⌛ Waktu terbangmu diatur menjadi &f%time%"
+  time-check: "&a⌛ Sisa waktu terbang: &f%time%"
+  
+  # Pesan toggle
+  flight-toggle-on: "&a✓ Terbang aktif"
+  flight-toggle-off: "&c✗ Terbang nonaktif"
+
+# Time format settings
+time-format:
+  days: "%d days"
+  day: "%d day"
+  hours: "%d hours"
+  hour: "%d hour"
+  minutes: "%d minutes"
+  minute: "%d minute"
+  seconds: "%d seconds"
+  second: "%d second"
+  format: "%days% %hours% %minutes% %seconds%"
+  compact: "%d%h%m%s"
