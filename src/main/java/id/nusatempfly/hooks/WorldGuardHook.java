@@ -184,6 +184,7 @@ public class WorldGuardHook implements Listener {
      * Handle when a player exits a no-fly region
      * @param player The player
      */
+    @SuppressWarnings("deprecation")
     private void handleExitNoFlyRegion(Player player) {
         UUID uuid = player.getUniqueId();
         
